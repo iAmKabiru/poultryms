@@ -1,0 +1,65 @@
+{% extends "admin/base_site.html" %} {% load i18n static %}{% load admin_menu %} {% block extrastyle %}{{ block.super }}
+<!--
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+-->
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/dashboard.css'%}"/>
+<style>
+.panel{
+     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+</style>
+{% endblock %} {% block coltype %}colMS{% endblock %} {% block bodyclass %}{{ block.super }} dashboard{% endblock %} {% block breadcrumbs %}{% endblock %} {% block content %}
+
+<div class="container">
+	<div id="content-main">
+		<!--
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="panel text-center"  style="height:300px; background-color:#367fa9">
+					<div class="panel-heading">
+						<h1 style="color:white; font-size: 50px;">Orders</h1>
+					</div>
+					<div class="panel-body">
+						<h1 style="color:white; font-weight: bold; font-size: 150px;">{{orders}}</h1>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="panel text-center"  style="height:300px; background-color:#367fa9">
+					<div class="panel-heading">
+						<h1 style="color:white; font-size: 50px;">Shippings</h1>
+					</div>
+					<div class="panel-body">
+						<h1 style="color:white; font-weight: bold; font-size: 150px;">{{shippings}}</h1>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="panel text-center"  style="height:300px; background-color:#367fa9">
+					<div class="panel-heading">
+						<h1 style="color:white; font-size: 50px;">Stores</h1>
+					</div>
+					<div class="panel-body">
+						<h1 style="color:white; font-weight: bold; font-size: 150px;">{{stores}}</h1>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="panel text-center"  style="height:300px; background-color:#367fa9">
+					<div class="panel-heading">
+						<h1 style="color:white; font-size: 50px;">Users</h1>
+					</div>
+					<div class="panel-body">
+						<h1 style="color:white; font-weight: bold; font-size: 150px;">{{users}}</h1>
+					</div>
+				</div>
+			</div>
+
+</div>
+</div>
+-->
+</div>
+{% endblock %}
