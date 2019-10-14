@@ -106,7 +106,7 @@ class Purchase(models.Model):
 class Casualty(models.Model):
 	casualty_type_choices = (
 		('death','death'),
-		('damage', 'damage'),
+		('injury', 'injury'),
 		)
 	birds = models.ForeignKey(Birds, on_delete=models.CASCADE)
 	casualty_type = models.CharField(max_length=255, choices = casualty_type_choices)
@@ -119,8 +119,8 @@ class Casualty(models.Model):
 
 
 # signal for updating birds on casualties 
-@receiver(post_save, sender=Casualty, dispatch_uid="update_when_add")
-def update_when_add(sender, **kwargs):
+@receiver(post_save, sender=Casualty, dispatch_uid="update_when_add_casualty")
+def update_when_add_casualty(sender, **kwargs):
     casualty = kwargs['instance']
     if casualty.pk:
         Birds.objects.filter(pk=casualty.birds_id).update(quantity=F('quantity') - casualty.quantity)
