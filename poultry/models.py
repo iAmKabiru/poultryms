@@ -85,6 +85,8 @@ class MedicalReport(models.Model):
 	case = models.CharField(max_length=255)
 	description = models.TextField()
 	date = models.DateTimeField(auto_now_add = True)
+	remark = models.TextField( null=True, blank=True)
+	prescription = models.TextField(null=True, blank=True)
 
 	def __str__(self):
 		return self.case
