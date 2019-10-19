@@ -40,6 +40,8 @@ class Feed(models.Model):
 class Medication(models.Model):
 	bird  = models.ForeignKey(Birds, on_delete=models.CASCADE)
 	description = models.CharField(max_length=255)
+	remark = models.TextField(blank=True, null=True)
+	prescription = models.TextField(null=True, blank=True)
 	date = models.DateTimeField(auto_now_add = True)
 
 	def __str__(self):
@@ -84,6 +86,7 @@ class DoctorVisit(models.Model):
 class MedicalReport(models.Model):
 	case = models.CharField(max_length=255)
 	description = models.TextField()
+	birds = models.ForeignKey(Birds, on_delete=models.CASCADE, blank=True, null=True)
 	date = models.DateTimeField(auto_now_add = True)
 	remark = models.TextField( null=True, blank=True)
 	prescription = models.TextField(null=True, blank=True)
@@ -120,14 +123,34 @@ class Casualty(models.Model):
 		verbose_name_plural = 'Casualties'
 
 
+
+
+class Notification(models.Model):
+	birds = models.ForeignKey(Birds, on_delete=models.CASCADE)
+	description = models.TextField()
+	date = models.DateField()
+
+
 # signal for updating birds on casualties 
 @receiver(post_save, sender=Casualty, dispatch_uid="update_when_add_casualty")
 def update_when_add_casualty(sender, **kwargs):
     casualty = kwargs['instance']
     if casualty.pk:
+        MedicalReport.objects.create(case=casualty.casualty_type, birds=casualty.birds, description="found" + " " + str(casualty.quantity) + " " + "affected")
         Birds.objects.filter(pk=casualty.birds_id).update(quantity=F('quantity') - casualty.quantity)
 
 
+"""
+# signal for creating medical report on casualty  
+@receiver(post_save, sender=Casualty)
+def casualty_is_created(sender, instance, created, **kwargs):
+    casualty = kwargs['instance']
+    print(created)
+    if created:
+        MedicalReport.objects.create(case=casualty.type, birds=casualty.birds)
+    else:
+        instance.medicalreport.save()
+"""
 
 
 # signal for updating birds on sale
@@ -136,3 +159,11 @@ def update_when_add(sender, **kwargs):
     sales = kwargs['instance']
     if sales.pk:
         Birds.objects.filter(pk=sales.birds_id).update(quantity=F('quantity') - sales.quantity)
+
+
+# signal for creating medication record on medical report
+@receiver(post_save, sender=MedicalReport, dispatch_uid="update_when_add_report")
+def update_when_add_report(sender, **kwargs):
+    report = kwargs['instance']
+    if report.pk:
+        Medication.objects.create(bird=report.birds, remark=report.remark, prescription=report.prescription)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import BirdType, Birds, Feed, Medication, Sales, Employers, DoctorVisit, MedicalReport, Purchase, Casualty
+from .models import BirdType, Birds, Feed, Medication, Sales, Employers, DoctorVisit, MedicalReport, Purchase, Casualty, Notification
 
 
 class BirdTypeAdmin(admin.ModelAdmin):
@@ -14,7 +14,7 @@ class FeedAdmin(admin.ModelAdmin):
 
 class MedicationAdmin(admin.ModelAdmin):
 	list_filter = ('bird',)
-	list_display = ('bird', 'description', 'date')
+	list_display = ('bird', 'description', 'remark', 'prescription', 'date')
 
 class SalesAdmin(admin.ModelAdmin):
 	list_filter = ('birds',)
@@ -27,7 +27,7 @@ class DoctorVisitAdmin(admin.ModelAdmin):
 	list_display = ('doctor_name', 'purpose', 'date', 'description')
 
 class MedicalReportAdmin(admin.ModelAdmin):
-	list_display = ('case', 'description', 'date')
+	list_display = ('case', 'description', 'birds', 'date', 'remark', 'prescription')
 
 class PurchaseAdmin(admin.ModelAdmin):
 	list_filter = ('purchase_type',)
@@ -35,8 +35,13 @@ class PurchaseAdmin(admin.ModelAdmin):
 
 
 class CasualtyAdmin(admin.ModelAdmin):
-	list_filter = ('casualty_type','birds')
+	list_filter = ('casualty_type', 'birds')
 	list_display = ('casualty_type', 'birds', 'quantity')
+
+
+class NotificationAdmin(admin.ModelAdmin):
+	list_display = ('birds', 'description', 'date')
+	list_filter = ('birds',)
 
 
 admin.site.register(BirdType, BirdTypeAdmin)
@@ -49,3 +54,4 @@ admin.site.register(Employers, EmployersAdmin)
 admin.site.register(MedicalReport, MedicalReportAdmin)
 admin.site.register(Purchase, PurchaseAdmin)
 admin.site.register(Casualty, CasualtyAdmin)
+admin.site.register(Notification, NotificationAdmin)
